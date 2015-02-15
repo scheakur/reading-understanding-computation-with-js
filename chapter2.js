@@ -2,6 +2,7 @@
 
 'use strict';
 
+
 class Struct {
 
   static new() {
@@ -306,6 +307,7 @@ class If extends Struct.new('condition', 'consequence', 'alternative') {
 
 }
 
+
 class Sequence extends Struct.new('first', 'second') {
 
   toString() {
@@ -364,6 +366,55 @@ class While extends Struct.new('condition', 'body') {
   }
 
 }
+
+
+var grammer = `
+start =
+  statement
+
+statement =
+  while
+  / assign
+
+while =
+  'while (' condition:expression ') { ' body:statement ' }' {
+    return 'new While(' + condition + ', ' + body + ')'
+  }
+
+assign =
+  name:[a-z]+ ' = ' expression:expression {
+    return 'new Assign("' + name + '", ' + expression + ')'
+  }
+
+expression =
+  less_than
+
+less_than =
+  left:multiply ' < ' right:less_than {
+    return 'new LessThan(' + left + ', ' + right + ')'
+  }
+  / multiply
+
+multiply =
+  left:term ' * ' right:multiply {
+    return 'new Multiply(' + left + ', ' + right + ')'
+  }
+  / term
+
+term =
+  number
+  / variable
+
+number =
+  digits:[0-9]+ {
+    return 'new Number(' + parseInt(digits.join(""), 10) + ')'
+  }
+
+variable =
+  name:[a-z]+ {
+    return 'new Variable("' + name + '")'
+  }
+`;
 
 
 // Sample
@@ -428,3 +479,10 @@ console.log(
   ).toJs())({ x: 1 })
 );
 
+var PEG = require('pegjs');
+var parser = PEG.buildParser(grammer);
+
+new Machine(
+  eval(parser.parse('while (x < 5) { x = x * 3 }')),
+  { x: new Number(1) }
+).run();
