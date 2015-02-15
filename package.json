@@ -1,0 +1,22 @@
+{
+  "name": "reading-understanding-computation-with-js",
+  "version": "0.0.0",
+  "description": "reading-understanding-computation-with-js =========================================",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scheakur/reading-understanding-computation-with-js.git"
+  },
+  "author": "scheakur <scheakur@gmail.com> (http://scheakur.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/scheakur/reading-understanding-computation-with-js/issues"
+  },
+  "homepage": "https://github.com/scheakur/reading-understanding-computation-with-js",
+  "dependencies": {
+    "pegjs": "^0.8.0"
+  }
+}
